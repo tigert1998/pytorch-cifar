@@ -12,10 +12,10 @@ cfg = {
 
 
 class VGG(nn.Module):
-    def __init__(self, vgg_name):
+    def __init__(self, vgg_name, num_classes=10):
         super(VGG, self).__init__()
         self.features = self._make_layers(cfg[vgg_name])
-        self.classifier = nn.Linear(512, 10)
+        self.classifier = nn.Linear(512, num_classes)
 
     def forward(self, x):
         out = self.features(x)
@@ -38,10 +38,17 @@ class VGG(nn.Module):
         return nn.Sequential(*layers)
 
 
-def test():
-    net = VGG('VGG11')
-    x = torch.randn(2,3,32,32)
-    y = net(x)
-    print(y.size())
+def vgg11(**kwargs):
+    return VGG("VGG11", **kwargs)
 
-# test()
+
+def vgg13(**kwargs):
+    return VGG("VGG13", **kwargs)
+
+
+def vgg16(**kwargs):
+    return VGG("VGG16", **kwargs)
+
+
+def vgg19(**kwargs):
+    return VGG("VGG19", **kwargs)
